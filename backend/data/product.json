@@ -1,17 +1,17 @@
 [
     {
-        "name" : "",
-        "price" : "",
-        "description" : "",
+        "name" : "SSD de 240 GB",
+        "price" : "450",
+        "description" : "Disco duro de estado solido que permite una mejor velocidad en la computadora.",
         "ratings" : 0,
         "images" : [{
-            "public_id" : "",
-            "url" : ""
+            "public_id" : "no",
+            "url" : "no"
         }],
-        "category" : "",
-        "seller" : "",
-        "stock" : 0,
-        "numOfReviews" : 0,
+        "category" : "Discos_duros",
+        "seller" : "Intelaf",
+        "stock" : 50,
+        "numOfReviews" : 20,
         "reviews" : []
     },
     {

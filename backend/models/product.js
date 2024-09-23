@@ -24,12 +24,10 @@ const productSchema = new mongoose.Schema({
     images: [
         {
             public_id: {
-                type: String,
-                required: true
+                type: String
             },
             url: {
-                type: String,
-                required: true
+                type: String
             },
         }
     ],
@@ -43,6 +41,7 @@ const productSchema = new mongoose.Schema({
                 'Accesorios',
                 'Audifonos',
                 'Cargadores',
+                'Discos_duros',
             ],
             message: 'Please select correct category for product'
         }
