@@ -1,142 +1,55 @@
-import React, { Fragment } from 'react'
-
-import MetaData from './layout/MetaData'
+import React, { Fragment, useEffect } from 'react';
+import MetaData from './layout/MetaData';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts, clearErrors } from '../actions/productActions';
+import Product from './product/Product';
 
 const Home = () => {
-  return (
-    <Fragment>
-        <MetaData title={'Compra los mejores productos en linea'}/>
-        
+    const dispatch = useDispatch();
 
-        <h1 id="products_heading">Últimos Productos</h1>
+    const { products, loading, error, productsCount } = useSelector(state => state.products);
 
-        <section id="products" className="container mt-5">
-            <div className="row">
-                <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-                    <div className="card p-3 rounded">
-                        <img
-                            className="card-img-top mx-auto"
-                            src="https://m.media-amazon.com/images/I/617NtexaW2L._AC_UY218_.jpg"
-                            alt="128GB Solid Storage Memory card - SanDisk Ultra"
-                        />
-                        <div className="card-body d-flex flex-column">
-                            <h5 className="card-title">
-                                {/* Cambiado <a> a <button> porque no hay un enlace real */}
-                                <button className="link-button" style={{ background: 'none', border: 'none', color: '#007bff', textDecoration: 'underline', cursor: 'pointer' }}>
-                                    128GB Solid Storage Memory card - SanDisk Ultra
-                                </button>
-                            </h5>
-                            <div className="ratings mt-auto">
-                                <div className="rating-outer">
-                                    <div className="rating-inner"></div>
-                                </div>
-                                <span id="no_of_reviews">(5 Reviews)</span>
-                            </div>
-                            <p className="card-text">Q.45.67</p>
-                            {/* Cambiado <a> a <button> */}
-                            <button id="view_btn" className="btn btn-block" style={{ cursor: 'pointer' }}>
-                                View Details
-                            </button>
-                        </div>
+    useEffect(() => {
+        dispatch(getProducts());
+
+        // Limpiar errores si existen
+        return () => {
+            if (error) {
+                dispatch(clearErrors());
+            }
+        };
+    }, [dispatch, error]);
+
+    return (
+        <Fragment>
+            <MetaData title={'Compra los mejores productos en línea'} />
+            <h1 id="products_heading" className="mb-4">Últimos Productos ({productsCount})</h1>
+
+            {loading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="sr-only">Cargando...</span>
                     </div>
                 </div>
-
-                <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-                    <div className="card p-3 rounded">
-                        <img
-                            className="card-img-top mx-auto"
-                            src="https://m.media-amazon.com/images/I/61B04f0ALWL._AC_UY218_.jpg"
-                            alt="Wyze Cam 1080p HD Indoor Wireless Smart Home Camera"
-                        />
-                        <div className="card-body d-flex flex-column">
-                            <h5 className="card-title">
-                                {/* Cambiado <a> a <button> */}
-                                <button className="link-button" style={{ background: 'none', border: 'none', color: '#007bff', textDecoration: 'underline', cursor: 'pointer' }}>
-                                    Wyze Cam 1080p HD Indoor Wireless Smart Home Camera
-                                </button>
-                            </h5>
-                            <div className="ratings mt-auto">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-half-o"></i>
-                                <i className="fa fa-star-o"></i>
-                                <span id="no_of_reviews">(5 Reviews)</span>
+            ) : error ? (
+                <div className="alert alert-danger text-center">{error}</div>
+            ) : (
+                <section id="products" className="container mt-5">
+                    <div className="row">
+                        {products.length > 0 ? (
+                            products.map(product => (
+                                <Product key={product._id} product={product}/>
+                            ))
+                        ) : (
+                            <div className="col-12">
+                                <p className="text-center">No hay productos disponibles.</p>
                             </div>
-                            <p className="card-text">Q.965.67</p>
-                            {/* Cambiado <a> a <button> */}
-                            <button id="view_btn" className="btn btn-block" style={{ cursor: 'pointer' }}>
-                                View Details
-                            </button>
-                        </div>
+                        )}
                     </div>
-                </div>
+                </section>
+            )}
+        </Fragment>
+    );
+};
 
-                <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-                    <div className="card p-3 rounded">
-                        <img
-                            className="card-img-top mx-auto"
-                            src="https://m.media-amazon.com/images/I/813oF-FY01L._AC_UY218_.jpg"
-                            alt="Fujifilm Instax Mini Instant Film Twin Pack"
-                        />
-                        <div className="card-body d-flex flex-column">
-                            <h5 className="card-title">
-                                {/* Cambiado <a> a <button> */}
-                                <button className="link-button" style={{ background: 'none', border: 'none', color: '#007bff', textDecoration: 'underline', cursor: 'pointer' }}>
-                                    Fujifilm Instax Mini Instant Film Twin Pack (White)
-                                </button>
-                            </h5>
-                            <div className="ratings mt-auto">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-half-o"></i>
-                                <i className="fa fa-star-o"></i>
-                                <span id="no_of_reviews">(5 Reviews)</span>
-                            </div>
-                            <p className="card-text">Q125.57</p>
-                            {/* Cambiado <a> a <button> */}
-                            <button id="view_btn" className="btn btn-block" style={{ cursor: 'pointer' }}>
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-                    <div className="card p-3 rounded">
-                        <img
-                            className="card-img-top mx-auto"
-                            src="https://m.media-amazon.com/images/I/61pBvlYVPxL._AC_UY218_.jpg"
-                            alt="AmazonBasics High-Speed HDMI Cable"
-                        />
-                        <div className="card-body d-flex flex-column">
-                            <h5 className="card-title">
-                                {/* Cambiado <a> a <button> */}
-                                <button className="link-button" style={{ background: 'none', border: 'none', color: '#007bff', textDecoration: 'underline', cursor: 'pointer' }}>
-                                    AmazonBasics High-Speed HDMI Cable
-                                </button>
-                            </h5>
-                            <div className="ratings mt-auto">
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star"></i>
-                                <i className="fa fa-star-half-o"></i>
-                                <i className="fa fa-star-o"></i>
-                                <span id="no_of_reviews">(5 Reviews)</span>
-                            </div>
-                            <p className="card-text">Q75.56</p>
-                            {/* Cambiado <a> a <button> */}
-                            <button id="view_btn" className="btn btn-block" style={{ cursor: 'pointer' }}>
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </Fragment>
-  )
-}
-
-export default Home
+export default Home;

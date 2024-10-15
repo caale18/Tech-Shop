@@ -1,39 +1,47 @@
 import {
-     ALL_PRODUCTS_REQUEST,
+    ALL_PRODUCTS_REQUEST,
     ALL_PRODUCTS_SUCCESS, 
     ALL_PRODUCTS_FAIL, 
     CLEAR_ERRORS
+} from '../constants/productConstants';
 
-} from '../constants/productConstants'
-import { isAction } from "redux";
+const initialState = {
+    products: [],
+    loading: true,
+    error: null,
+    productsCount: 0,
+};
 
-export const productReducers = (state = { products:[] }, action) => {
-    switch(action.type) {
-        case  ALL_PRODUCTS_REQUEST:
+export const productReducers = (state = initialState, action) => {
+    switch (action.type) {
+        case ALL_PRODUCTS_REQUEST:
             return {
+                ...state,
                 loading: true,
-                products: []
-            }
+            };
 
-        case  ALL_PRODUCTS_SUCCESS:
+        case ALL_PRODUCTS_SUCCESS:
             return {
+                ...state,
                 loading: false,
                 products: action.payload.products,
-                productsCount: action.payload.productsCount
-            }
-        case   ALL_PRODUCTS_FAIL:
+                productsCount: action.payload.productsCount,
+            };
+
+        case ALL_PRODUCTS_FAIL:
             return {
+                ...state,
                 loading: false,
-                error: action.payload
-            }
-            
+                error: action.payload,
+            };
+
         case CLEAR_ERRORS:
             return {
                 ...state,
-                error: null
-            }
+                error: null,
+            };
 
         default:
             return state;
     }
-}
+};

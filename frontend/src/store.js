@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
+import { productReducers } from './reducers/productReducers';
 
-// No se importa ningún reducer ya que no hay ninguno en este momento
 const rootReducer = combineReducers({
-  // Aquí puedes agregar tus reducers más tarde
+  products: productReducers // Cambiar a "products" para que coincida con el useSelector en Home.js
 });
 
 const store = configureStore({
