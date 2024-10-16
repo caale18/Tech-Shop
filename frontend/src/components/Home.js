@@ -1,16 +1,20 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
 import MetaData from './layout/MetaData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, clearErrors } from '../actions/productActions';
 import Product from './product/Product';
 
 const Home = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const { keyword } = useParams(); // Obtener el parámetro 'keyword' de la URL
     const dispatch = useDispatch();
 
-    const { products, loading, error, productsCount } = useSelector(state => state.products);
+    const { products, loading, error, productsCount, resPerPage } = useSelector(state => state.products);
 
     useEffect(() => {
-        dispatch(getProducts());
+        dispatch(getProducts(keyword, currentPage));
 
         // Limpiar errores si existen
         return () => {
@@ -18,7 +22,11 @@ const Home = () => {
                 dispatch(clearErrors());
             }
         };
-    }, [dispatch, error]);
+    }, [dispatch, error, keyword, currentPage]);
+
+    const setCurrentPageNo = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <Fragment>
@@ -28,7 +36,7 @@ const Home = () => {
             {loading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
                     <div className="spinner-border text-primary" role="status">
-                        <span className="sr-only">Cargando...</span>
+                        <span className="sr-only"></span>
                     </div>
                 </div>
             ) : error ? (
@@ -38,7 +46,7 @@ const Home = () => {
                     <div className="row">
                         {products.length > 0 ? (
                             products.map(product => (
-                                <Product key={product._id} product={product}/>
+                                <Product key={product._id} product={product} />
                             ))
                         ) : (
                             <div className="col-12">
@@ -48,8 +56,26 @@ const Home = () => {
                     </div>
                 </section>
             )}
+
+            {resPerPage <= productsCount && (
+                <div className='d-flex justify-content-center mt-5'>
+                    <Pagination 
+                        activePage={currentPage}
+                        itemsCountPerPage={resPerPage}
+                        totalItemsCount={productsCount}
+                        onChange={setCurrentPageNo}
+                        nextPageText={'⟩'}
+                        prevPageText={'⟨'}
+                        firstPageText={'«'}
+                        lastPageText={'»'}
+                        itemClass='page-item'
+                        linkClass='page-link'
+                    />
+                </div>
+            )}
         </Fragment>
     );
 };
 
 export default Home;
+

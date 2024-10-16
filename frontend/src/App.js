@@ -6,6 +6,8 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './components/Home';
 
+import ProductDetails from './components/product/ProductDetails';
+
 function App() {
   return (
     <Router>
@@ -15,6 +17,8 @@ function App() {
           {/* Definición de rutas usando Routes y Route */}
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/search/:keyword" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </div>
         <Footer />

@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { productReducers } from './reducers/productReducers';
+import { productDetailsReducer, productReducers } from './reducers/productReducers';
 
 const rootReducer = combineReducers({
-  products: productReducers // Cambiar a "products" para que coincida con el useSelector en Home.js
+  products: productReducers, // Cambiar a "products" para que coincida con el useSelector en Home.js
+  productDetails: productDetailsReducer
 });
 
 const store = configureStore({

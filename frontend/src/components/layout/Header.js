@@ -1,23 +1,23 @@
 import React, { Fragment } from 'react';
 import '../../App.css';
 
+import Search from './Search';
+
 const Header = () => {
   return (
     <Fragment>
       {/* Inicio de la barra de navegación */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          {/* Sección de la marca/logo de la aplicación */}
           <button className="navbar-brand btn btn-link" style={{ padding: 0 }}>
             <img 
-              src="./images/logo.png" 
+              src="/images/logo.png" 
               alt="Logo" 
               className="img-fluid" 
               style={{ maxWidth: '120px' }} 
-            />
+            />  
           </button>
 
-          {/* Botón para colapsar la barra de navegación en pantallas pequeñas */}
           <button 
             className="navbar-toggler" 
             type="button" 
@@ -30,26 +30,13 @@ const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          {/* Contenido de la barra de navegación */}
           <div className="collapse navbar-collapse" id="navbarContent">
             <div className="d-flex flex-grow-1 align-items-center">
-              {/* Contenedor de la barra de búsqueda */}
               <div className="col-12 col-md-8 col-lg-6 px-0">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    id="search_field"
-                    className="form-control"
-                    placeholder="Buscar en Technicom..."
-                    aria-label="Search"
-                  />
-                  <button id="search_btn" className="btn btn-primary">
-                    <i className="fa fa-search" aria-hidden="true"></i>
-                  </button>
-                </div>
+                {/* Renderiza el componente Search directamente */}
+                <Search />
               </div>
 
-              {/* Sección para el botón de login y el ícono del carrito de compras */}
               <div className="d-flex align-items-center ms-auto">
                 <button className="btn btn-outline-primary me-3" id="login_btn">
                   Login
