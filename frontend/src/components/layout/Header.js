@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import '../../App.css';
 
+import { Link } from 'react-router-dom'; // Importa Link
+
 import Search from './Search';
 
 const Header = () => {
@@ -9,14 +11,14 @@ const Header = () => {
       {/* Inicio de la barra de navegación */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <button className="navbar-brand btn btn-link" style={{ padding: 0 }}>
+          <Link to="/" className="navbar-brand btn btn-link" style={{ padding: 0 }}>
             <img 
               src="/images/logo.png" 
               alt="Logo" 
               className="img-fluid" 
               style={{ maxWidth: '120px' }} 
             />  
-          </button>
+          </Link>
 
           <button 
             className="navbar-toggler" 

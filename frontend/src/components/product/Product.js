@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Product = ({ product }) => {
+const Product = ({ product, col }) => {
   return (
-    <div className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+    <div className={`col-sm-12 col-md-6 col-lg-${col} col-xl-3 mb-4`}>
         <div className="card h-100 shadow-sm">
             <img
                 className="card-img-top"

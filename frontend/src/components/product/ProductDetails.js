@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, clearErrors } from '../../actions/productActions';
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
+import Error from '../layout/Error'; // Importa el componente Error
 import { useParams } from 'react-router-dom';
-
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -38,17 +38,17 @@ const ProductDetails = () => {
       ) : (
         <div className="container my-5">
           {error ? (
-            <div className="alert alert-danger text-center">{error}</div>
-          ) : ( //TENEMOS QUE CAMBIAR TODA LA ESTRUCTURA DE LA IMAGEN PARA QUE ME LO MUESTRE EN UN CARRUCEL DE IMAGENES Y ASI MISMO INSERTAR LAS IMAGENES EN NUESTRO MODELO DE PRODUCTOS EN EL BACKEND
+            <Error message={error} /> // Usa el componente Error para mostrar el mensaje de error
+          ) : (
             <div className="row justify-content-center">
               <div className="col-12 col-lg-5">
-                  <img 
+                <img 
                   src={product.image || "https://m.media-amazon.com/images/I/617NtexaW2L._AC_UY218_.jpg"} 
                   alt={product.name} 
                   className="img-fluid mb-4" 
                   height="500" 
                   width="500" 
-                  /> 
+                /> 
               </div>
 
               <div className="col-12 col-lg-6 mt-4 mt-lg-0">
@@ -155,6 +155,7 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
 
 
 
