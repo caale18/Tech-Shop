@@ -10,13 +10,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, clearErrors } from '../actions/productActions';
 import Product from './product/Product';
 import Loader from './layout/Loader';
-import Error from './layout/Error'; // Importa el componente Error
-
+import Error from './layout/Error';
 
 const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const  [price, setPrice] = useState([0, 15000]);
+    const [price, setPrice] = useState([0, 15000]);
+    const [category, setCategory] = useState('');
+    const [rating, setRating] = useState(0);
 
+    const categories = [
+        'Desktop',
+        'Laptops',
+        'Accesorios',
+        'Audifonos',
+        'Cargadores',
+        'Discos_duros'
+    ];
 
     const { keyword } = useParams();
     const dispatch = useDispatch();
@@ -24,15 +33,14 @@ const Home = () => {
     const { products, loading, error, productsCount, resPerPage } = useSelector(state => state.products);
 
     useEffect(() => {
-        dispatch(getProducts(keyword, currentPage, price));
+        dispatch(getProducts(keyword, currentPage, price, category, rating));
 
-        // Limpiar errores si existen
         return () => {
             if (error) {
                 dispatch(clearErrors());
             }
         };
-    }, [dispatch, error, keyword, currentPage, price]);
+    }, [dispatch, error, keyword, currentPage, price, category, rating]);
 
     const setCurrentPageNo = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -41,7 +49,7 @@ const Home = () => {
     return (
         <Fragment>
             <MetaData title={'Compra los mejores productos en línea'} />
-            <h1 id="products_heading" className="mb-4">Últimos Productos ({productsCount})</h1>
+            <h1 id="products_heading" className="text-center mb-4">Últimos Productos ({productsCount})</h1>
 
             {loading ? (
                 <Loader />
@@ -50,17 +58,15 @@ const Home = () => {
             ) : (
                 <section id="products" className="container mt-5">
                     <div className="row">
-
-
                         {keyword ? (
                             <Fragment>
-                                <div className='col-6 col-md-3 mt-5 mb-5'>
-                                    <div className='px-5'>
+                                <div className='col-12 col-md-3 mb-4'>
+                                    <div className='px-4'>
                                         <Slider
                                             range 
                                             marks={{
-                                                1 : `Q.1`,
-                                                15000 : `Q.15000`,
+                                                1: `Q.1`,
+                                                15000: `Q.15000`,
                                             }}
                                             min={1} 
                                             max={15000}
@@ -73,10 +79,57 @@ const Home = () => {
                                             value={price}
                                             onChange={price => setPrice(price)}
                                         />
+
+                                        <hr className='my-5' />
+
+                                        <div className='mt-5'>
+                                            <h4 className='mb-3'>Categorías</h4>
+                                            <ul className='pl-0'>
+                                                {categories.map(category => (
+                                                    <li
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            listStyleType: 'none',
+                                                        }}
+                                                        key={category}
+                                                        onClick={() => setCategory(category)}
+                                                    >
+                                                        {category}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <hr className='my-3' />
+
+                                        <div className='mt-5'>
+                                            <h4 className='mb-3'>Calificación</h4>
+                                            <ul className='pl-0'>
+                                                {[5, 4, 3, 2, 1].map(star => (
+                                                    <li
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            listStyleType: 'none',
+                                                        }}
+                                                        key={star}
+                                                        onClick={() => setRating(star)}
+                                                    >
+                                                        <div className='rating-outer'>
+                                                            <div
+                                                                className='rating-inner'
+                                                                style={{
+                                                                    width: `${star * 20}%`,
+                                                                }}
+                                                            ></div>
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className='col-6 col-md-9'>
+                                <div className='col-12 col-md-9'>
                                     <div className='row'>
                                         {products.length > 0 ? (
                                             products.map(product => (
@@ -86,13 +139,13 @@ const Home = () => {
                                             <div className="col-12">
                                                 <p className="text-center">No hay productos disponibles.</p>
                                             </div>
-                                        )}    
+                                        )}
                                     </div>
-
                                 </div>
                             </Fragment>
-                        ): (
-                                products.length > 0 ? (
+                        ) : (
+                            <div className='row'>
+                                {products.length > 0 ? (
                                     products.map(product => (
                                         <Product key={product._id} product={product} col={3} />
                                     ))
@@ -100,7 +153,8 @@ const Home = () => {
                                     <div className="col-12">
                                         <p className="text-center">No hay productos disponibles.</p>
                                     </div>
-                                )                            
+                                )}
+                            </div>
                         )}
                     </div>
                 </section>
@@ -127,6 +181,7 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
 

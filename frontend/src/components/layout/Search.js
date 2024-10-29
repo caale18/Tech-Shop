@@ -16,7 +16,7 @@ const Search = () => {
     };
 
     return (
-        <form onSubmit={searchHandler}>
+        <form onSubmit={searchHandler} className="d-flex">
             <div className="input-group">
                 <input
                     type="text"
@@ -26,7 +26,11 @@ const Search = () => {
                     aria-label="Search"
                     onChange={(e) => setKeyword(e.target.value)}
                 />
-                <button id="search_btn" className="btn btn-outline-primary">
+                <button 
+                    id="search_btn" 
+                    className="btn btn-outline-primary"
+                    type="submit"
+                >
                     <i className="fa fa-search" aria-hidden="true"></i>
                 </button>
             </div>
@@ -35,4 +39,5 @@ const Search = () => {
 };
 
 export default Search;
+
 

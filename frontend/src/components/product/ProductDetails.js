@@ -59,13 +59,13 @@ const ProductDetails = () => {
                   <div className="rating-outer">
                     <div className="rating-inner" style={{ width: `${(product?.ratings / 5) * 100}%` }}></div>
                   </div>
-                  <span className="ml-2" id="no_of_reviews">({product.numOfReviews} Reviews)</span>
+                  <span className="ms-2" id="no_of_reviews">({product.numOfReviews} Reviews)</span>
                 </div>
 
                 <h4 className="text-success text-center mb-4" id="product_price">Q.{product?.price}</h4>
 
                 <div className="stockCounter d-flex align-items-center justify-content-center mb-4">
-                  <button className="btn btn-danger minus mr-2" onClick={decreaseQty}>-</button>
+                  <button className="btn btn-danger minus me-2" onClick={decreaseQty}>-</button>
                   <input 
                     type="number" 
                     className="form-control count text-center" 
@@ -73,7 +73,7 @@ const ProductDetails = () => {
                     readOnly 
                     style={{ maxWidth: '60px' }} 
                   />
-                  <button className="btn btn-primary plus ml-2" onClick={increaseQty}>+</button>
+                  <button className="btn btn-primary plus ms-2" onClick={increaseQty}>+</button>
                 </div>
 
                 <button 
@@ -97,8 +97,8 @@ const ProductDetails = () => {
                   id="review_btn" 
                   type="button" 
                   className="btn btn-primary mt-4" 
-                  data-toggle="modal" 
-                  data-target="#ratingModal"
+                  data-bs-toggle="modal" 
+                  data-bs-target="#ratingModal"
                 >
                   Envíe su reseña
                 </button>
@@ -116,7 +116,7 @@ const ProductDetails = () => {
               <button 
                 type="button" 
                 className="close" 
-                data-dismiss="modal" 
+                data-bs-dismiss="modal" 
                 aria-label="Close"
               >
                 <span aria-hidden="true">&times;</span>
@@ -141,7 +141,7 @@ const ProductDetails = () => {
 
               <button 
                 className="btn btn-primary my-3 float-right review-btn px-4" 
-                data-dismiss="modal" 
+                data-bs-dismiss="modal" 
                 aria-label="Close"
               >
                 Enviar
@@ -155,6 +155,7 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
 
 
 
